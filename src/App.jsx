@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
+
+
   
   const [formData, setFormData] = useState({
     name: '',
@@ -55,8 +57,21 @@ function App() {
     }
   }
 
+  const handleButtonClick = (event) => {
+    event.stopPropagation()
+    console.log('Button clicked', event)
+  }
+
+  const handleDivClick = (event) => {
+    console.log('Div clicked', event)
+  }
+
   return (
     <>
+      <div onClick={handleDivClick} style={{ color: 'red'}}>
+        <button onClick={handleButtonClick}>Click me</button>
+      </div>
+      <br></br><hr></hr><br></br>
       <form>
         <div>
           <label htmlFor="name">Name</label>
