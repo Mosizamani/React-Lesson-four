@@ -28,7 +28,7 @@ function App() {
     if (age < 18) {
       return 'Age must be greater than 18'
     }
-    return ''
+    return '' 
   }
 
   const validate = () => {
@@ -65,13 +65,76 @@ function App() {
   const handleDivClick = (event) => {
     console.log('Div clicked', event)
   }
+  
+  const [inputValue, setInputValue] = useState(''); // State to hold the input value
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); // Updates the state with the new input value
+  }
+
+  // const [inputValue2, setInputValue2] = useState('');
+  // const [message, setMessage] = useState('');
+
+  // const handleBlur = () => {
+  //   if (!inputValue) {
+  //     setMessage('Input cannot be empty!');
+  //   } else {
+  //     setMessage('');
+  //   }
+
+  // }
+
+  const [email, setEmail] = useState('')
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value)
+    // console.log(event.target.value)
+  }
+
+
 
   return (
     <>
+
+      <form>
+        <label>Email Address: 
+          <input 
+          name= "email"
+          placeholder='Email Address'
+          value={email}
+          onChange={handleEmailChange}
+          />
+        <p>Current email value: {email}</p>
+        </label>
+      </form>
+      <br /><hr /><br />
+      {/* <div>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue2(e.target.value)}
+          onBlur={handleBlur}  // Fires when input loses focus
+          placeholder="Type something"
+        />
+        <p>{message}</p>
+      </div> */}
+
+      <div>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Type something"
+        />
+        <p><strong>Current Value:</strong> {inputValue}</p>
+      </div>
+
       <div onClick={handleDivClick} style={{ color: 'red'}}>
         <button onClick={handleButtonClick}>Click me</button>
       </div>
+
       <br></br><hr></hr><br></br>
+
       <form>
         <div>
           <label htmlFor="name">Name</label>
