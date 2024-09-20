@@ -1,33 +1,95 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    dob: ''
+  })
+
+  const [error, setError] = useState({})
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormData({
+      ...formData,
+      [name]: value
+    })
+  }
+
+  const validateDob = () => {
+    const dob = new Date(formData.dob)
+    const currentDate = new Date()
+    const age = currentDate.getFullYear() - dob.getFullYear()
+    if (age < 18) {
+      return 'Age must be greater than 18'
+    }
+    return ''
+  }
+
+  const validate = () => {
+    let tempError = {}
+
+    if (!formData.name) {
+      tempError = { ...tempError, name: 'Name is required' }
+    }
+
+    setError(tempError)
+    return Object.keys(tempError).length === 0
+
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    if (validate()) {
+      console.log(formData)
+    } else {
+      console.log('Form has errors')
+    }
+
+    if (validateDob()) {
+      console.log(validateDob())
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <form>
+        <div>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="dob">Date of Birth</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" onClick={handleSubmit}>Submit</button>
+      </form>
     </>
   )
 }
